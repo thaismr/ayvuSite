@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{%block 'title'%} {{ post.title }} - {{ post.category }} {%endblock%}
+
+{%block 'body'%}
+
+    <h2>{{ post.title }}</h2>
+    <p>
+        <i class="tiny material-icons">folder_open</i> {{ post.category }} |
+        <i class="tiny material-icons">today</i> {{ post.date_created }}
+    </p>
+    <p>{{ post.content }}</p>
+
+{%endblock%}

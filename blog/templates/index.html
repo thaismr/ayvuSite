@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+
+{%block 'title'%}Blog Index{%endblock%}
+
+<h4>Blog Posts</h4>
+
+{%block 'body'%}
+
+      <table class="highlight">
+        <thead>
+          <tr>
+              <th>Title</th>
+              <th>Category</th>
+          </tr>
+        </thead>
+          <tbody>
+
+{% for post in posts %}
+    {% if post.is_published %}
+
+          <tr>
+            <td><a href="{% url 'blog_post' post.id %}">{{ post.title }}</a></td>
+            <td>{{ post.category }}</td>
+          </tr>
+
+    {% endif %}
+{% endfor %}
+
+        </tbody>
+      </table>
+
+      <ul class="pagination">
+<!--        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
+
+          {% for page in posts.paginator.page_range %}
+            <li {% if posts.number == page %}class="active"{% endif %}>
+                <a href="?p={{ page }}">{{ page }}</a>
+            </li>
+          {% endfor %}
+
+<!--        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>-->
+      </ul>
+
+{%endblock%}
