@@ -22,17 +22,35 @@
 
 <div class="container">
 
-{%block 'body'%}{%endblock%}
 
-<img src="{% static 'img/sample.jpg' %}">
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <form method="get" action="{% url 'search' %}">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">textsms</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete"
+                               name="term"
+                               value="{{ request.GET.term }}"
+                        />
+                        <label for="autocomplete-input">Search...</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {%block 'body'%}{%endblock%}
+
+    <img src="{% static 'img/sample.jpg' %}">
 
 
 
-<!--JavaScript at end of body for optimized loading-->
-<!--  <script type="text/javascript" src="js/materialize.min.js"></script>-->
+    <!--JavaScript at end of body for optimized loading-->
+    <!--  <script type="text/javascript" src="js/materialize.min.js"></script>-->
 
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </div>
 </body>

@@ -2,43 +2,44 @@
 
 {%block 'title'%}Blog Index{%endblock%}
 
-<h4>Blog Posts</h4>
 
 {%block 'body'%}
 
-      <table class="highlight">
-        <thead>
-          <tr>
-              <th>Title</th>
-              <th>Category</th>
-          </tr>
-        </thead>
-          <tbody>
+<h4>Blog Posts</h4>
 
-{% for post in posts %}
-    {% if post.is_published %}
+<table class="highlight">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
 
-          <tr>
-            <td><a href="{% url 'blog_post' post.id %}">{{ post.title }}</a></td>
-            <td>{{ post.category }}</td>
-          </tr>
+    {% for post in posts %}
+    <!--    {% if post.is_published %}-->
 
-    {% endif %}
-{% endfor %}
+    <tr>
+        <td><a href="{% url 'blog_post' post.id %}">{{ post.title }}</a></td>
+        <td>{{ post.category }}</td>
+    </tr>
 
-        </tbody>
-      </table>
+    <!--    {% endif %}-->
+    {% endfor %}
 
-      <ul class="pagination">
-<!--        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
+    </tbody>
+</table>
 
-          {% for page in posts.paginator.page_range %}
-            <li {% if posts.number == page %}class="active"{% endif %}>
-                <a href="?p={{ page }}">{{ page }}</a>
-            </li>
-          {% endfor %}
+<ul class="pagination">
+    <!--        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
 
-<!--        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>-->
-      </ul>
+    {% for page in posts.paginator.page_range %}
+    <li {% if posts.number == page %}class="active"{% endif %}>
+        <a href="?p={{ page }}&term={{ request.GET.term }}">{{ page }}</a>
+    </li>
+    {% endfor %}
+
+    <!--        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>-->
+</ul>
 
 {%endblock%}
