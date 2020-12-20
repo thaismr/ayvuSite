@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
+from django.contrib import messages
 from django.http import HttpResponse, Http404
 from django.db.models.functions import Concat
 from django.db.models import Q, Value
@@ -37,7 +38,9 @@ def search(request):
     term = request.GET.get('term')
 
     if term is None or not term:
-        raise Http404()
+        # raise Http404()
+        messages.add_message(request, messages.ERROR, "Search field can't be empty.")
+        return redirect('blog')
 
     # full_name = Concat('first_name', Value(' '), 'last_name')
     #

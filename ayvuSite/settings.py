@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+# Messages
+from django.contrib.messages import constants
 from pathlib import Path
 import os
 
@@ -127,3 +128,11 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
+
+MESSAGE_TAGS = {
+    constants.ERROR: 'red accent-3 red-text text-lighten-5',
+    constants.WARNING: 'amber darken-4',
+    constants.DEBUG: 'cyan accent-2',
+    constants.SUCCESS: 'lime accent-3',
+    constants.INFO: 'blue-grey',
+}

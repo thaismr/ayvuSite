@@ -15,6 +15,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(PostCategory, on_delete=models.DO_NOTHING)
     content = models.TextField()
+    image = models.ImageField(blank=True, upload_to='images/%Y/%m')
     date_created = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=False)
 
