@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
 {% block 'body' %}
-    DASHBOARD
+    <h1>Dashboard</h1>
+    {% include '_messages.html' %}
+    <p>Hello, {{ user.username }}</p>
 {% endblock %}
