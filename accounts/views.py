@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from . models import BlogPostForm
 
 
 # Create your views here.
@@ -71,5 +72,17 @@ def register(request):
 
 @login_required(redirect_field_name='login')
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    if request.method != 'POST':
+        form = BlogPostForm()
+        return render(request, 'dashboard.html', {'form': form})
+    else:
+        form = BlogPostForm(request.POST, request.FILES)
 
+        if not form.is_valid():
+            messages.error(request, 'Error validating form.')
+            form = BlogPostForm(request.POST)
+            return render(request, 'dashboard.html', {'form': form})
+
+    form.save()
+    messages.success(request, f'Blog post {request.POST.get("title")} created successfully.')
+    return redirect('dashboard')

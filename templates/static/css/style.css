@@ -1,0 +1,8 @@
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    opacity: 1;
+    pointer-events: auto;
+}
+select {
+    display: flex;
+}
