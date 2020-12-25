@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <form method="get" action="{% url 'search' %}">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">textsms</i>
+                    <input type="text" id="autocomplete-input" class="autocomplete"
+                           name="term"
+                           value="{{ request.GET.term }}"
+                    />
+                    <label for="autocomplete-input">Search...</label>
+                </div>
+                {% include '_messages.html' %}
+            </form>
+        </div>
+    </div>
+</div>
