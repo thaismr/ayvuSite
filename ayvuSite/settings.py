@@ -126,6 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'templates/static',
 ]
+STATIC_ROOT = os.path.join('static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
@@ -137,3 +138,9 @@ MESSAGE_TAGS = {
     constants.SUCCESS: 'lime accent-3',
     constants.INFO: 'blue-grey',
 }
+
+# Production server settings:
+try:
+    from . local_settings import *
+except ImportError:
+    pass
