@@ -1,19 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html>
 <head>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
     <!--Import style.css-->
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
-
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>{%block 'title'%}{%endblock%} | Ayvu</title>
+    <title>{% block title %}Home{% endblock title %} | Ayvu</title>
 </head>
 
 <body>
@@ -24,20 +21,16 @@
 
     {% if 'accounts' not in request.path %}
 
-        {% include '_searchbar.html' %}
+    {% include '_searchbar.html' %}
 
     {% endif %}
 
-    {%block 'body'%}{%endblock%}
+    {% block content %}{% endblock content %}
 
-    <img src="{% static 'img/sample.jpg' %}">
-
+    <img src="{% static 'img/sample.jpg' %}" alt="Sample">
 
 
     <!--JavaScript at end of body for optimized loading-->
-    <!--  <script type="text/javascript" src="js/materialize.min.js"></script>-->
-
-    <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </div>
