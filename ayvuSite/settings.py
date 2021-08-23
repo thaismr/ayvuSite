@@ -15,17 +15,9 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4)ggz8twvt85sce!c-mie%#9rz^#)@adk+n@9+@1v0oel&+nwl'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -140,7 +132,7 @@ MESSAGE_TAGS = {
 }
 
 # Production server settings:
-try:
-    from . local_settings import *
-except ImportError:
-    pass
+if os.environ.get("CAPROVER") is None:
+    from .env.local_settings import *
+else:
+    from .env.settings_caprover import *
