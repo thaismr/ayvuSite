@@ -121,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(BASE_DIR / 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # http://whitenoise.evans.io/en/stable/django.html#instructions-for-amazon-cloudfront
 STATIC_HOST = os.environ.get('DJANGO_CDN_HOST', '')
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url

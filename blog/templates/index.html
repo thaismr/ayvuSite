@@ -1,37 +1,35 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
-{%block 'title'%}Blog Index{%endblock%}
+{% block title %}Blog Index{% endblock %}
 
-
-{%block 'body'%}
+{% block content %}
 
 <h4>Blog Posts</h4>
 
 <table class="highlight">
+    <caption>Blog Posts</caption>
     <thead>
     <tr>
-        <th>Title</th>
-        <th>Category</th>
+        <th id="title">Title</th>
+        <th id="category">Category</th>
     </tr>
     </thead>
     <tbody>
 
     {% for post in posts %}
-    <!--    {% if post.is_published %}-->
-
+    {% if post.is_published %}
     <tr>
         <td><a href="{% url 'blog_post' post.id %}">{{ post.title }}</a></td>
         <td>{{ post.category }}</td>
     </tr>
-
-    <!--    {% endif %}-->
+    {% endif %}
     {% endfor %}
 
     </tbody>
 </table>
 
 <ul class="pagination">
-    <!--        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
+    <li class="disabled"><a href="#!"><i class="material-icons" aria-hidden="true">chevron_left</i></a></li>
 
     {% for page in posts.paginator.page_range %}
     <li {% if posts.number == page %}class="active"{% endif %}>
@@ -39,7 +37,7 @@
     </li>
     {% endfor %}
 
-    <!--        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>-->
+    <li class="waves-effect"><a href="#!"><i class="material-icons" aria-hidden="true">chevron_right</i></a></li>
 </ul>
 
-{%endblock%}
+{% endblock content %}

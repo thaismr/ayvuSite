@@ -1,13 +1,14 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
+{% load static %}
 
-{%block 'title'%} {{ post.title }} - {{ post.category }} {%endblock%}
+{% block title %}{{ post.title }} - {{ post.category }}{% endblock %}
 
-{%block 'body'%}
+{% block content %}
 
 <h2>{{ post.title }}</h2>
 <p>
-    <i class="tiny material-icons">folder_open</i> {{ post.category }} |
-    <i class="tiny material-icons">today</i> {{ post.date_created }}
+    <i class="tiny material-icons" aria-hidden=true>folder_open</i> {{ post.category }} |
+    <i class="tiny material-icons" aria-hidden=true>today</i> {{ post.date_created }}
 </p>
 
 {% if post.image %}
@@ -16,7 +17,7 @@
             <div class="card blue-grey darken-1">
                 <div class="card-image">
             <span class="white-text">
-                <img src="{{ post.image.url }}" />
+                <img src="{% static post.image.url %}" alt="Featured image" />
             </span>
                 </div>
             </div>
@@ -26,4 +27,4 @@
 
 <p>{{ post.content }}</p>
 
-{%endblock%}
+{% endblock content %}
