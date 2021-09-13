@@ -1,65 +1,39 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
 from django.contrib import messages
-from django.http import HttpResponse, Http404
 from django.db.models.functions import Concat
+from django.views.generic import ListView, DetailView, UpdateView
 from django.db.models import Q, Value
 from . models import BlogPost
 
-
-# Create your views here.
-def index(request):
-    # return HttpResponse('Blog index.')
-    # posts = BlogPost.objects.all()
-    posts = BlogPost.objects.order_by('-id').filter(
-        is_published=True
-    )
-    paginator = Paginator(posts, 1)
-    page = request.GET.get('p')
-    posts = paginator.get_page(page)
-    return render(request, 'index.html', {
-        'posts': posts
-    })
+from ayvuSite.mixins import PublishedViewsMixin
 
 
-def blog_post(request, post_id):
-    # post = BlogPost.objects.get(id=post_id)
-    post = get_object_or_404(BlogPost, id=post_id)
-
-    if not post.is_published:
-        raise Http404()
-
-    return render(request, 'blog_post.html', {
-        'post': post
-    })
+class BlogPostList(PublishedViewsMixin, ListView):
+    model = BlogPost
+    template_name = 'index.html'
+    context_object_name = 'posts'
+    order_by = '-date_created'
 
 
-def search(request):
-    term = request.GET.get('term')
+class BlogPostDetail(PublishedViewsMixin, DetailView):
+    model = BlogPost
+    template_name = 'blog_post.html'
+    context_object_name = 'post'
 
-    if term is None or not term:
-        # raise Http404()
-        messages.add_message(request, messages.ERROR, "Search field can't be empty.")
-        return redirect('blog')
 
-    # full_name = Concat('first_name', Value(' '), 'last_name')
-    #
-    # posts = BlogPost.objects.annotate(
-    #     relevant=full_name
-    # ).filter(
-    #     relevant__icontains=term,
-    #     is_published=True,
-    # )
+class BlogPostSearch(BlogPostList):
+    """ Extends BlogPostList with search query filtering """
+    # TODO: search form and validation
 
-    posts = BlogPost.objects.order_by('-id').filter(
-        Q(title__icontains=term) | Q(content__icontains=term),
-        is_published=True,
-    )
+    def get_queryset(self):
+        search_query = self.request.GET.get('q', None)
 
-    print(posts.query)
-    paginator = Paginator(posts, 1)
-    page = request.GET.get('p')
-    posts = paginator.get_page(page)
-    return render(request, 'search.html', {
-        'posts': posts
-    })
+        if not search_query:
+            messages.add_message(self.request, messages.ERROR, "Search field can't be empty.")
+            return super().get_queryset()
+
+        return super().get_queryset().annotate(
+            full_name=Concat('author__first_name', Value(' '), 'author__last_name')
+        ).filter(
+            Q(title__icontains=search_query) | Q(content__icontains=search_query) |
+            Q(full_name__icontains=search_query) | Q(author__username__icontains=search_query)
+        )

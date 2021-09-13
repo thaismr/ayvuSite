@@ -11,17 +11,17 @@
     <tr>
         <th id="title">Title</th>
         <th id="category">Category</th>
+        <th id="author">Author</th>
     </tr>
     </thead>
     <tbody>
 
     {% for post in posts %}
-    {% if post.is_published %}
     <tr>
-        <td><a href="{% url 'blog_post' post.id %}">{{ post.title }}</a></td>
+        <td><a href="{% url 'blog:post' post.slug %}">{{ post.title }}</a></td>
         <td>{{ post.category }}</td>
+        <td>{{ post.author }}</td>
     </tr>
-    {% endif %}
     {% endfor %}
 
     </tbody>
