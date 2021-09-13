@@ -34,9 +34,12 @@ INSTALLED_APPS = [
     #: Third party libraries
     'debug_toolbar',
     #: Project libraries
+    'ayvuSite.users.apps.UsersConfig',
+    'languages.apps.LanguagesConfig',
+    'categories.apps.CategoriesConfig',
     'pages.apps.PagesConfig',
     'blog.apps.BlogConfig',
-    'accounts.apps.AccountsConfig',
+    # 'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -143,6 +146,20 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = str(APPS_DIR / 'media/')
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
+
+
+# AUTHENTICATION
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/3.2/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-user-model
+AUTH_USER_MODEL = "users.User"
+
+
+#: https://docs.djangoproject.com/en/3.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 MESSAGE_TAGS = {

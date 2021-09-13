@@ -1,8 +1,15 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from .views import BlogPostList, BlogPostDetail, BlogPostSearch
+
+app_name = 'blog'
 
 urlpatterns = [
-    path('', views.index, name='blog'),
-    path('search/', views.search, name='search'),
-    path('<int:post_id>', views.blog_post, name='blog_post'),
+    path('', BlogPostList.as_view(), name='index'),
+    path('search/', BlogPostSearch.as_view(), name='search'),
+    path('<slug>', BlogPostDetail.as_view(), name='post'),
+    # path('<slug>/', include([
+    #     path('history/', history),
+    #     path('edit/', edit),
+    #     path('discuss/', discuss),
+    # ])),
 ]
