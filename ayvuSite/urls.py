@@ -19,7 +19,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 import debug_toolbar
 
-from pages.views import about
 from . import views
 
 urlpatterns = [

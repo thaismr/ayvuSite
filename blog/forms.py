@@ -3,10 +3,10 @@ from .models import BlogPost
 
 
 class BlogPostForm(ModelForm):
-    """ form = BlogPostForm(request.user) """
+    """ Call this as BlogPostForm(request.user) """
     class Meta:
         model = BlogPost
-        # fields = ('title', 'category', )
+        fields = ('title', 'category', )
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -3,7 +3,9 @@ from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from . models import BlogPostForm
+from blog.forms import BlogPostForm
+
+REGISTER_TMPL = 'register.html'
 
 
 # Create your views here.
@@ -34,7 +36,7 @@ def logout(request):
 def register(request):
     if request.method != 'POST':
         # messages.info(request, 'Nothing sent.')
-        return render(request, 'register.html')
+        return render(request, REGISTER_TMPL)
 
     print(request.POST)
     uname = request.POST.get('uname')
@@ -44,25 +46,25 @@ def register(request):
 
     if not uname or not email or not passwd_1 or not passwd_2:
         messages.error(request, 'All fields must be filled.')
-        return render(request, 'register.html')
+        return render(request, REGISTER_TMPL)
 
     try:
         validate_email(email)
-    except:
+    except Exception:
         messages.error(request, 'E-mail not valid.')
-        return render(request, 'register.html')
+        return render(request, REGISTER_TMPL)
 
     if passwd_1 != passwd_2:
         messages.error(request, 'Passwords do not match.')
-        return render(request, 'register.html')
+        return render(request, REGISTER_TMPL)
 
     if User.objects.filter(username=uname).exists():
         messages.error(request, 'Username already exists.')
-        return render(request, 'register.html')
+        return render(request, REGISTER_TMPL)
 
     if User.objects.filter(email=email).exists():
         messages.error(request, 'E-mail already registered.')
-        return render(request, 'register.html')
+        return render(request, REGISTER_TMPL)
 
     user = User.objects.create_user(username=uname, email=email, password=passwd_1)
     user.save()
