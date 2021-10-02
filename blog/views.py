@@ -13,11 +13,22 @@ class BlogPostList(PublishedViewsMixin, ListView):
     context_object_name = 'posts'
     order_by = '-date_created'
 
+    def get_queryset(self):
+        return super().get_queryset().select_related('author', 'category', 'language')
+
+
+class BlogPostBySelf(BlogPostList):
+    """ Extends BlogPostList filtering by User's own entries """
+    pass
+
 
 class BlogPostDetail(PublishedViewsMixin, DetailView):
     model = BlogPost
     template_name = 'blog_post.html'
     context_object_name = 'post'
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('author', 'category', 'language')
 
 
 class BlogPostSearch(BlogPostList):
