@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # Required by Debug toolbar
     #: Extra libraries
     'django.contrib.postgres',  # Postgres advanced functionality
     #: Third party libraries
@@ -48,12 +48,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  #: On top after security middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  #: Django debug toolbar
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',  #: Django debug toolbar
 ]
 
 ROOT_URLCONF = 'ayvuSite.urls'
@@ -178,14 +178,7 @@ MESSAGE_TAGS = {
 # https://github.com/MaistrenkoAnton/django-material-admin
 MATERIAL_ADMIN_SITE = {
     'HEADER': 'Ayvu Site Admin Area',  # Admin site header
-    'TITLE': 'Ayvu Admin',  # Admin site title
-    # 'FAVICON':  'path/to/favicon',  # Admin site favicon (path to static should be specified)
-    # 'MAIN_BG_COLOR':  '',  # Admin site main color, css color should be specified
-    # 'MAIN_HOVER_COLOR':  '',  # Admin site main hover color, css color should be specified
-    # 'PROFILE_PICTURE':  'path/to/image',  # Admin site profile picture (path to static should be specified)
-    # 'PROFILE_BG':  'path/to/image',  # Admin site profile background (path to static should be specified)
-    # 'LOGIN_LOGO':  'path/to/image',  # Admin site logo on login page (path to static should be specified)
-    # 'LOGOUT_BG':  'path/to/image',  # Admin site background on login/logout pages (path to static should be specified)
+    'TITLE': 'Ayvu Admin',  # Admin site titlein/logout pages (path to static should be specified)
     'SHOW_THEMES':  True,  # Show default admin themes button
     'TRAY_REVERSE': False,  # Hide object-tools and additional-submit-line by default
     'NAVBAR_REVERSE': False,  # Hide side navbar by default
@@ -194,6 +187,7 @@ MATERIAL_ADMIN_SITE = {
         # Set icons for applications(lowercase), including 3rd party apps,
         # {'application_name': 'material_icon_name', ...}
         'sites': 'send',
+        'blog': 'description',
     },
     'MODEL_ICONS': {
         # Set icons for models(lowercase), including 3rd party models,
