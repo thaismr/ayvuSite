@@ -4,6 +4,7 @@ from . models import BlogPost
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
+    icon_name = 'description'
     list_display = ('title', 'category', 'date_created', 'published_status')
     list_editable = ('category', 'published_status')
     list_filter = ('category', 'date_created', 'published_status')

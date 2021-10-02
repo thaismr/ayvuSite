@@ -23,12 +23,14 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
+    'material',
+    'material.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # Required by Debug toolbar
     #: Extra libraries
     'django.contrib.postgres',  # Postgres advanced functionality
     #: Third party libraries
@@ -46,12 +48,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  #: On top after security middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  #: Django debug toolbar
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',  #: Django debug toolbar
 ]
 
 ROOT_URLCONF = 'ayvuSite.urls'
@@ -158,7 +160,7 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = "users.User"
 
 
-#: https://docs.djangoproject.com/en/3.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
+# https://docs.djangoproject.com/en/3.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
@@ -168,6 +170,30 @@ MESSAGE_TAGS = {
     constants.DEBUG: 'cyan accent-2',
     constants.SUCCESS: 'lime accent-3',
     constants.INFO: 'blue-grey',
+}
+
+
+# MATERIAL DESIGN ADMIN
+# ------------------------------------------------------------------------------
+# https://github.com/MaistrenkoAnton/django-material-admin
+MATERIAL_ADMIN_SITE = {
+    'HEADER': 'Ayvu Site Admin Area',  # Admin site header
+    'TITLE': 'Ayvu Admin',  # Admin site titlein/logout pages (path to static should be specified)
+    'SHOW_THEMES':  True,  # Show default admin themes button
+    'TRAY_REVERSE': False,  # Hide object-tools and additional-submit-line by default
+    'NAVBAR_REVERSE': False,  # Hide side navbar by default
+    'SHOW_COUNTS': True,  # Show instances counts for each model
+    'APP_ICONS': {
+        # Set icons for applications(lowercase), including 3rd party apps,
+        # {'application_name': 'material_icon_name', ...}
+        'sites': 'send',
+        'blog': 'description',
+    },
+    'MODEL_ICONS': {
+        # Set icons for models(lowercase), including 3rd party models,
+        # {'model_name': 'material_icon_name', ...}
+        'site': 'contact_mail',
+    }
 }
 
 # Development / Production server settings:

@@ -21,6 +21,7 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(ProxyUser)
 class ProxyUserAdmin(admin.ModelAdmin):
+    icon_name = 'person'
     fields = (
         ('username', 'is_active',),
         ('first_name', 'last_name', 'email', 'is_premium'),
@@ -33,6 +34,7 @@ class ProxyUserAdmin(admin.ModelAdmin):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
+    icon_name = 'person'
     autocomplete_fields = ('user',)
     list_display = ('user', 'bio', 'website',)
     list_filter = ('user__is_active', 'user__is_premium')

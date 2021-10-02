@@ -61,7 +61,7 @@ class BlogPost(PublishedAbstractBase):
     )
     # TODO: Change to enum class with localization
     published_status = models.CharField(
-        default='DRAFT',
+        default='PENDING',
         max_length=10,
         choices=(
             ('DRAFT', 'Draft'),  # Draft by author choice
