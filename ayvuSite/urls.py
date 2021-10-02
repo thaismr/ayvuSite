@@ -20,6 +20,7 @@ from django.conf import settings
 import debug_toolbar
 
 from . import views
+from .users.views import UserSignUpView
 
 urlpatterns = [
   path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
   path('blog/', include('blog.urls')),
   # path('<username>/posts/', include('blog.urls')),  # TODO: blog by username
   path('accounts/', include('accounts.urls')),
+  path('profile/signup/', UserSignUpView.as_view(), name='signup'),
   path('', include('pages.urls')),
   path('__debug__/', include(debug_toolbar.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,6 +9,8 @@ from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
+from languages.models import Language
+
 
 class User(AbstractUser):
     """Allow for updatable User models without breaking foreign keys."""
@@ -37,6 +39,9 @@ class UserProfile(models.Model):
     bio = models.CharField(_("Bio"), max_length=30, blank=True)
     website = models.URLField(_("Website"), max_length=255, blank=True)
     birth_date = models.DateField(_("Birth date"), null=True, blank=True)
+    speaks = models.ManyToManyField(Language, verbose_name=_("Languages spoken"), related_name='speakers')
+    # learning = models.ManyToManyField(Language, label=_("Languages learning"), related_name='students')
+    # teaching = models.ManyToManyField(Language, label=_("Languages teaching"), related_name='teachers')
 
     def __str__(self):
         return str(self.user)
@@ -46,4 +51,6 @@ class UserProfile(models.Model):
 def post_save_user(sender, instance, created, **kwargs):
     """When `saving User` event signals, create profile for user."""
     if created:
-        UserProfile.objects.get_or_create(user=instance)
+        profile = UserProfile.objects.get_or_create(user=instance)
+        profile.speaks.add(**kwargs.cleaned_data.get('speaks'))
+
