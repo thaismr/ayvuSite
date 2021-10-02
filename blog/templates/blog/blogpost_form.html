@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog - Add entry{% endblock %}
+
+{% block content %}
+
+<h2>Blog - Add entry</h2>
+<form method="post" action="{% url 'blog:add_entry' %}">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Sign Up" />
+</form>
+
+{% endblock content %}

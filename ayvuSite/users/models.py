@@ -15,6 +15,7 @@ from languages.models import Language
 class User(AbstractUser):
     """Allow for updatable User models without breaking foreign keys."""
     is_premium = models.BooleanField(_("Premium"), default=False)
+    active_language = models.ForeignKey(Language, default=1, on_delete=models.SET(1))
 
 
 class ProxyUser(User):

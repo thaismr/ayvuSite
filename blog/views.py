@@ -1,8 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db.models.functions import Concat
-from django.views.generic import ListView, DetailView, UpdateView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.db.models import Q, Value
 from . models import BlogPost
+from . forms import BlogPostForm
 
 from ayvuSite.mixins import PublishedViewsMixin
 
@@ -31,6 +34,18 @@ class BlogPostDetail(PublishedViewsMixin, DetailView):
         return super().get_queryset().select_related('author', 'category', 'language')
 
 
+class BlogPostPreview(LoginRequiredMixin, DetailView):
+    model = BlogPost
+    template_name = 'blog_post.html'
+    context_object_name = 'post'
+
+    def get_queryset(self):
+        """Only the author can preview post"""
+        return super().get_queryset().select_related('author', 'category', 'language').filter(
+            author=self.request.user
+        )
+
+
 class BlogPostSearch(BlogPostList):
     """ Extends BlogPostList with search query filtering """
     # TODO: search form and validation
@@ -48,3 +63,26 @@ class BlogPostSearch(BlogPostList):
             Q(title__icontains=search_query) | Q(content__icontains=search_query) |
             Q(full_name__icontains=search_query) | Q(author__username__icontains=search_query)
         )
+
+
+class BlogPostCreate(LoginRequiredMixin, CreateView):
+    model = BlogPost
+    form_class = BlogPostForm
+
+    def get_success_url(self):
+        return reverse('blog:preview', kwargs={'slug': self.object.slug})
+
+    def get_form_kwargs(self):
+        """Add current user to form kwargs."""
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def form_valid(self, form):
+        """
+        If the form is valid, updates form with request user data.
+        https://docs.djangoproject.com/en/3.2/topics/class-based-views/generic-editing/#models-and-request-user
+        """
+        form.instance.author = self.request.user
+        form.instance.language = self.request.user.active_language
+        return super().form_valid(form)
