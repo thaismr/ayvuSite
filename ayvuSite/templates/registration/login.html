@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h4>Log in</h4>
+
+{% if form.non_field_errors %}
+<div>
+  {% for error in form.non_field_errors %}
+  <p>{{ error }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  {{ form.username }}
+  {{ form.password }}
+  <button class="btn waves-effect waves-light" type="submit" name="action">Log in
+    <i class="material-icons right" aria-hidden="true">send</i>
+  </button>
+</form>
+{% endblock content %}

@@ -23,4 +23,6 @@ class UserSignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_premium = False
         user.save()
+        profile = UserProfile.objects.create(user=user)
+        profile.speaks.add(*self.cleaned_data.get('speaks'))
         return user

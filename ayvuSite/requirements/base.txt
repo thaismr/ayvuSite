@@ -1,5 +1,9 @@
 # Django
-Django==3.2.6
-psycopg2==2.9.1
-whitenoise==5.3.0  # http://whitenoise.evans.io/en/stable/index.html
+Django==4.0
 django-debug-toolbar==3.2.2  # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
+django-material-admin==1.8.5
+django-heroku==0.3.1
+dj-database-url==0.5.0
+gunicorn==20.1.0
+psycopg2==2.9.3
+whitenoise==5.3.0  # http://whitenoise.evans.io/en/stable/index.html

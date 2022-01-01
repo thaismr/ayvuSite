@@ -22,13 +22,11 @@ from . import views
 from .users.views import UserSignUpView
 
 urlpatterns = [
-  path('admin/', admin.site.urls),
-  path('', views.home, name='home'),
-  path('blog/', include('blog.urls')),
-  # path('<username>/posts/', include('blog.urls')),  # TODO: blog by username
-  path('accounts/', include('accounts.urls')),
-  path('profile/signup/', UserSignUpView.as_view(), name='signup'),
-  path('', include('pages.urls')),
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('blog/', include('blog.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/signup/', UserSignUpView.as_view(), name='signup'),
 ]
 
 if settings.DEBUG:
