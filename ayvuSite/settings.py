@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',  #: On top after security middleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',  #: Django debug toolbar
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,7 +121,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
 
 # STATIC
 # Static files (CSS, JavaScript, Images)
@@ -204,7 +204,7 @@ MATERIAL_ADMIN_SITE = {
 #     from .env.settings_caprover import *
 
 try:
-    import env.local_settings
+    from .env.local_settings import *
 except ImportError:
     django_heroku.settings(locals())
 

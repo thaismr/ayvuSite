@@ -1,10 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
-#: attach functionality to events
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
 #: custom user model
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
