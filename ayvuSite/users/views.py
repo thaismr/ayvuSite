@@ -1,9 +1,25 @@
-from django.contrib.auth import login
+from django.contrib.auth import get_user_model, login
 from django.shortcuts import redirect
 from django.views.generic import CreateView
+from rest_framework import viewsets, permissions
 
+from .serializers import UserSerializer, UserProfileSerializer
 from .forms import UserSignUpForm
-from .models import User
+from .models import UserProfile
+
+User = get_user_model()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all().order_by('-user')
+    serializer_class = UserProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserSignUpView(CreateView):
