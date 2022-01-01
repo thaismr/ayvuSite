@@ -1,11 +1,11 @@
 {% load static %}
 <nav>
     <div class="nav-wrapper blue-grey">
-        <a href="{% url 'home' %}" class="brand-logo">Ayvu</a>
+        <a href="{% url 'home' %}" class="brand-logo">&nbsp; Ayvu</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'blog:index' %}">Blog</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'signup' %}">Signup</a></li>
         </ul>
     </div>

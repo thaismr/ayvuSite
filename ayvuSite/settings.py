@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from django.contrib.messages import constants
 from pathlib import Path
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -41,7 +43,6 @@ INSTALLED_APPS = [
     'categories.apps.CategoriesConfig',
     'pages.apps.PagesConfig',
     'blog.apps.BlogConfig',
-    # 'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -197,7 +198,13 @@ MATERIAL_ADMIN_SITE = {
 }
 
 # Development / Production server settings:
-if os.environ.get("CAPROVER") is None:
-    from .env.local_settings import *
-else:
-    from .env.settings_caprover import *
+# if os.environ.get("CAPROVER") is None:
+#     from .env.local_settings import *
+# else:
+#     from .env.settings_caprover import *
+
+try:
+    import env.local_settings
+except ImportError:
+    django_heroku.settings(locals())
+

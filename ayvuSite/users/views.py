@@ -9,6 +9,7 @@ from .models import User
 class UserSignUpView(CreateView):
     model = User
     form_class = UserSignUpForm
+    template_name = 'registration/signup.html'
 
     def get_context_data(self, **kwargs):
         kwargs['is_premium'] = False
