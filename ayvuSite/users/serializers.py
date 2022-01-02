@@ -6,13 +6,18 @@ User = get_user_model()
 
 
 # Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['url', 'bio']
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    user_profile = UserProfileSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'user_profile', 'is_staff']
+        extra_kwargs = {
+            'url': {'lookup_field': 'username'}
+        }

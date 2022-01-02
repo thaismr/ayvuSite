@@ -19,13 +19,17 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
 from . import views
+
 from .users.views import UserSignUpView, UserViewSet, UserProfileViewSet
+from blog.views import BlogPostViewSet
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'profiles', UserProfileViewSet)
+router.register(r'blog', BlogPostViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

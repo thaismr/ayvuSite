@@ -13,15 +13,16 @@ User = get_user_model()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'username'
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all().order_by('-user')
     serializer_class = UserProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 
+# Regular HTML template views:
+# ------------------------------
 class UserSignUpView(CreateView):
     model = User
     form_class = UserSignUpForm

@@ -2,14 +2,25 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db.models.functions import Concat
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView
 from django.db.models import Q, Value
+from rest_framework import viewsets
+
 from . models import BlogPost
 from . forms import BlogPostForm
 
 from ayvuSite.mixins import PublishedViewsMixin
+from .serializers import BlogPostSerializer
 
 
+class BlogPostViewSet(viewsets.ModelViewSet):
+    queryset = BlogPost.objects.all().order_by('-date_updated', '-date_created')
+    serializer_class = BlogPostSerializer
+    lookup_field = 'slug'
+
+
+# Regular HTML template views:
+# ------------------------------
 class BlogPostList(PublishedViewsMixin, ListView):
     model = BlogPost
     template_name = 'index.html'
@@ -48,7 +59,6 @@ class BlogPostPreview(LoginRequiredMixin, DetailView):
 
 class BlogPostSearch(BlogPostList):
     """ Extends BlogPostList with search query filtering """
-    # TODO: search form and validation
 
     def get_queryset(self):
         search_query = self.request.GET.get('q', None)
