@@ -17,16 +17,28 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-
+from rest_framework import routers
 from . import views
-from .users.views import UserSignUpView
+
+from .users.views import UserSignUpView, UserViewSet, UserProfileViewSet
+from blog.views import BlogPostViewSet
+
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'profiles', UserProfileViewSet)
+router.register(r'blog', BlogPostViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('blog/', include('blog.urls')),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', UserSignUpView.as_view(), name='signup'),
+    path('blog/', include('blog.urls')),
 ]
 
 if settings.DEBUG:
