@@ -34,6 +34,9 @@ router.register(r'blog', BlogPostViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path("api/login-set-cookie/", views.login_set_cookie, name="login-cookie"),
+    path("api/user-data/", views.ProfileAPIView.as_view(), name="user-data"),
+    path("api/login/", views.login_view, name="login-view"),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('accounts/', include('django.contrib.auth.urls')),

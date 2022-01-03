@@ -4,7 +4,7 @@ from django.db.models.functions import Concat
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 from django.db.models import Q, Value
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
 from . models import BlogPost
 from . forms import BlogPostForm
@@ -16,6 +16,7 @@ from .serializers import BlogPostSerializer
 class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.all().order_by('-date_updated', '-date_created')
     serializer_class = BlogPostSerializer
+    permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'slug'
 
 
