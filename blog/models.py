@@ -1,13 +1,17 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from categories.models import Category
-from languages.models import Language
+from simple_history.models import HistoricalRecords
 
 from ayvuSite.mixins import PublishedAbstractBase
+from categories.models import Category
+from languages.models import Language
+from base.models import BaseModel
 
 
-class BlogPost(PublishedAbstractBase):
+class BlogPost(PublishedAbstractBase, BaseModel):
+    """Model definition for BlogPost."""
+
     title = models.CharField(
         max_length=120
     )
@@ -79,20 +83,29 @@ class BlogPost(PublishedAbstractBase):
         default=None,
         verbose_name='Schedule to publish on'
     )
-    date_created = models.DateTimeField(
-        default=timezone.now,
-        verbose_name='Created on'
-    )
-    date_updated = models.DateTimeField(
-        default=timezone.now,
-        verbose_name='Last updated'
-    )
+    # date_created = models.DateTimeField(
+    #     default=timezone.now,
+    #     verbose_name='Created on'
+    # )
+    # date_updated = models.DateTimeField(
+    #     default=timezone.now,
+    #     verbose_name='Last updated'
+    # )
     content = models.TextField(
         verbose_name='Post content'
     )
+    # history = HistoricalRecords()
+
+    # @property
+    # def _history_user(self):
+    #     return self.changed_by
+    #
+    # @_history_user.setter
+    # def _history_user(self, value):
+    #     self.changed_by = value
 
     class Meta:
-        ordering = ('date_created', 'date_updated')
+        ordering = ('-modified_date', '-created_date')
 
     def __str__(self):
         return self.title

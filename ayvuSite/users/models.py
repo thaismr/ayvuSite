@@ -4,7 +4,7 @@ from django.db import models
 #: custom user model
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-
+from simple_history.models import HistoricalRecords
 from languages.models import Language
 
 
@@ -37,6 +37,7 @@ class UserProfile(models.Model):
     website = models.URLField(_("Website"), max_length=255, blank=True)
     birth_date = models.DateField(_("Birth date"), null=True, blank=True)
     speaks = models.ManyToManyField(Language, verbose_name=_("Languages spoken"), related_name='speakers')
+    history = HistoricalRecords()
 
     def __str__(self):
         return str(self.user)

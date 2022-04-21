@@ -5,10 +5,11 @@ class Language(models.Model):
     name = models.CharField(max_length=50, verbose_name='Language')
     slug = models.SlugField(unique=True)
     flag = models.ImageField(
+        null=True,
         blank=True,
         upload_to='images/flags'
     )
-    summary = models.CharField(max_length=255)
+    summary = models.CharField(blank=True, max_length=255)
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):

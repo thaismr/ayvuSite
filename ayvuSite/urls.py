@@ -22,6 +22,7 @@ from . import views
 
 from .users.views import UserSignUpView, UserViewSet, UserProfileViewSet
 from blog.views import BlogPostViewSet
+from languages.views import LanguageAPIView, language_api_view, language_detail_api_view
 
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -34,6 +35,9 @@ router.register(r'blog', BlogPostViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    # path("api/languages/", LanguageAPIView.as_view(), name="languages"),
+    path("api/languages/", language_api_view, name="languages"),
+    path("api/languages/<int:pk>/", language_detail_api_view, name="languages-detail"),
     path("api/login-set-cookie/", views.login_set_cookie, name="login-cookie"),
     path("api/user-data/", views.ProfileAPIView.as_view(), name="user-data"),
     path("api/login/", views.login_view, name="login-view"),

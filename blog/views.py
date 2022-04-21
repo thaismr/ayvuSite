@@ -14,7 +14,7 @@ from .serializers import BlogPostSerializer
 
 
 class BlogPostViewSet(viewsets.ModelViewSet):
-    queryset = BlogPost.objects.all().order_by('-date_updated', '-date_created')
+    queryset = BlogPost.objects.all().order_by('-modified_date', '-created_date')
     serializer_class = BlogPostSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'slug'
